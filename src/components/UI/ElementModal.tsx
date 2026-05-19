@@ -3,54 +3,67 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useStore } from '@/store/useStore'
 import { CATEGORY_LABELS } from '@/lib/colors'
 
-// Electron shell visualization (CSS-only circles)
-function ElectronShells({ config }: { config: string }) {
-  // Parse simplified config like "[Xe] 4f¹⁴ 5d¹⁰ 6s²"
-  // Just show decorative animated circles
+// Electron shell visualization
+// Each orbit: outer div handles centering, inner motion.div handles rotation only.
+// Separating these prevents Framer Motion from overwriting translate(-50%,-50%).
+const ORBITS = [
+  { size: 30, tilt: 0,   duration: 2.8, opacity: 0.55 },
+  { size: 46, tilt: 55,  duration: 4.2, opacity: 0.40 },
+  { size: 62, tilt: -35, duration: 5.8, opacity: 0.28 },
+]
+
+function ElectronShells({ config: _ }: { config: string }) {
   return (
-    <div className="relative w-24 h-24 mx-auto my-2">
+    <div className="relative w-20 h-20 mx-auto my-2" style={{ perspective: 400 }}>
+
       {/* Nucleus */}
       <div
-        className="absolute inset-0 m-auto w-4 h-4 rounded-full z-10"
+        className="absolute rounded-full z-10"
         style={{
-          background: 'radial-gradient(circle, #fff 0%, rgba(0,200,255,0.6) 60%, transparent 100%)',
-          boxShadow: '0 0 10px #00ccff',
-          width: 12, height: 12,
+          width: 10, height: 10,
           top: '50%', left: '50%',
-          transform: 'translate(-50%,-50%)',
+          marginTop: -5, marginLeft: -5,
+          background: 'radial-gradient(circle, #fff 0%, rgba(0,200,255,0.7) 55%, transparent 100%)',
+          boxShadow: '0 0 8px 2px rgba(0,200,255,0.6)',
         }}
       />
-      {/* Orbit rings */}
-      {[28, 42, 56].map((size, i) => (
-        <motion.div
+
+      {ORBITS.map(({ size, tilt, duration, opacity }, i) => (
+        /* Outer div: centers the ring AND applies the static 3D tilt.
+           Never animated — so transform is never touched by Framer Motion. */
+        <div
           key={i}
-          className="absolute rounded-full border"
+          className="absolute"
           style={{
             width: size,
             height: size,
             top: '50%',
             left: '50%',
-            transform: 'translate(-50%,-50%)',
-            borderColor: `rgba(0,200,255,${0.5 - i * 0.12})`,
-          }}
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 3 + i * 1.2,
-            repeat: Infinity,
-            ease: 'linear',
+            marginTop: -size / 2,
+            marginLeft: -size / 2,
+            transform: `rotateX(${tilt}deg)`,
           }}
         >
-          {/* Electron dot on orbit */}
-          <div
-            className="absolute w-1.5 h-1.5 rounded-full bg-cyan-400"
-            style={{
-              top: -3,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              boxShadow: '0 0 4px #00ccff',
-            }}
-          />
-        </motion.div>
+          {/* Inner div: rotates in the orbit plane — no translate needed */}
+          <motion.div
+            className="absolute inset-0 rounded-full border"
+            style={{ borderColor: `rgba(0,200,255,${opacity})` }}
+            animate={{ rotate: 360 }}
+            transition={{ duration, repeat: Infinity, ease: 'linear' }}
+          >
+            {/* Electron dot at the top of the ring */}
+            <div
+              className="absolute rounded-full bg-cyan-400"
+              style={{
+                width: 5, height: 5,
+                top: -2.5,
+                left: '50%',
+                marginLeft: -2.5,
+                boxShadow: '0 0 5px 1px rgba(0,200,255,0.8)',
+              }}
+            />
+          </motion.div>
+        </div>
       ))}
     </div>
   )
