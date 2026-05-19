@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #000000;
+  color: #e0e0f0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Custom scrollbar ────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(0,200,255,0.3);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(0,200,255,0.5); }
+
+/* ── Hide scrollbar but keep scrollable ─────────────────────────────────── */
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* ── Text selection ──────────────────────────────────────────────────────── */
+
+::selection {
+  background: rgba(0,200,255,0.25);
+  color: #ffffff;
+}
+
+/* ── CSS Variables ───────────────────────────────────────────────────────── */
+
+:root {
+  --color-bg:      #000000;
+  --color-surface: #0a0a0f;
+  --color-border:  #1a1a2e;
+  --color-cyan:    #00ccff;
+  --color-magenta: #ff0088;
+  --color-green:   #00ff88;
+  --font-display:  'Orbitron', monospace;
+  --font-body:     'Space Grotesk', sans-serif;
+  --font-mono:     'JetBrains Mono', monospace;
+}
+
+/* ── Utility: neon glow text ─────────────────────────────────────────────── */
+
+.glow-cyan    { text-shadow: 0 0 20px rgba(0,204,255,0.7); }
+.glow-magenta { text-shadow: 0 0 20px rgba(255,0,136,0.7); }
+.glow-green   { text-shadow: 0 0 20px rgba(0,255,136,0.7); }
+
+/* ── Canvas fill ─────────────────────────────────────────────────────────── */
+
+canvas { display: block; }
+
+/* ── Prevent tap highlight on mobile ────────────────────────────────────── */
+
+* { -webkit-tap-highlight-color: transparent; }
