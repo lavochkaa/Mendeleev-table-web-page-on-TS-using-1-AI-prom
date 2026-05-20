@@ -3,6 +3,10 @@
 Ultra-premium cinematic 3D visualization of all 118 chemical elements.
 Built with Next.js, React Three Fiber, and custom GLSL shaders.
 
+![Preview](public/preview.png)
+
+> **На русском?** Читайте [ЗАПУСК.md](ЗАПУСК.md) — пошаговая инструкция для запуска на своём компьютере.
+
 ---
 
 ## 🚀 Running the project
