@@ -37,7 +37,11 @@ Then open **http://localhost:3000**
 | Orbit / rotate | **Click + drag** |
 | Zoom | **Scroll** |
 | View element details | **Click** any card |
-| Close modal | **Escape** or click the X |
+| Expand atom to full screen | **Click** the atom model in the detail panel |
+| Collapse atom panel | **›** button (top-right of panel) |
+| Pause / resume orbital animation | **⏸ / ▶** button on the atom |
+| Hover nucleus / ring / electron | Shows tooltip with shell info |
+| Close modal | Click the **✕** or click outside the panel |
 | Toggle audio | **M** or click the audio button |
 | Fullscreen | **F** or click the fullscreen button |
 
@@ -66,6 +70,7 @@ src/
 ├── app/              Next.js App Router
 ├── types/            TypeScript interfaces
 ├── data/elements.ts  All 118 elements data
+│   └── atomicData.ts Precise shell data H→Sc, Bohr fallback for 22+
 ├── lib/
 │   ├── formations.ts 9 formation position calculators
 │   └── colors.ts     Neon category color palette
@@ -82,7 +87,8 @@ src/
         ├── LoadingScreen.tsx  Cinematic loading sequence
         ├── HUD.tsx            Main heads-up display
         ├── FormationPicker.tsx Bottom formation selector
-        └── ElementModal.tsx   Element detail panel
+        ├── ElementModal.tsx   Element detail panel (expands to full screen)
+        └── AtomViewer.tsx     3D orbital visualiser with pause control
 ```
 
 ---
@@ -114,7 +120,7 @@ src/
 
 1. **Element search** — real-time highlight by name/symbol/property
 2. **More formations** — torus, cube spiral, tree of life
-3. **Electron visualization** — animated 3D orbital diagrams on click
+3. ~~**Electron visualization** — animated 3D orbital diagrams on click~~ ✅ Done
 4. **AR mode** — WebXR overlay on phone camera
 5. **Category filter** — hide/show element categories
 6. **Timeline mode** — animate through element discovery history
